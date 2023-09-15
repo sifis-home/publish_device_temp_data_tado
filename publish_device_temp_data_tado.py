@@ -93,7 +93,7 @@ def publish():
             temperature_string = str(temperature).replace("[", "").replace("]", "")
             temperature_string_list.append(temperature_string)
             
-            print("List of Random Numbers:", temperature_string_list)
+            print("List of temperatures:", temperature_string_list)
 
             ws_req = {
                     "RequestPostTopicUUID": {

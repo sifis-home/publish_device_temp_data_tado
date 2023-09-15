@@ -9,13 +9,11 @@ import subprocess
 import _thread
 import rel
 import argparse
-import platform
 import datetime
 import hashlib
 import re
+import socket
 from PyTado.interface import Tado
-
-t = Tado('my@username.com', 'mypassword')
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--requestor_type', help='Requestor Type', required=True, type=str)
@@ -23,6 +21,8 @@ parser.add_argument('--requestor_type', help='Requestor Type', required=True, ty
 args = parser.parse_args()
 requestor_type = args.requestor_type
 print("Requestor Type: ", requestor_type)
+
+# t = Tado('my@username.com', 'mypassword')
 
 def on_error(ws, error):
     print(error)
@@ -36,7 +36,16 @@ def on_open(ws):
     print("### Connection established ###")
 
 def publish():
-    requestor_id = platform.node()
+
+    ## getting the hostname by socket.gethostname() method
+    hostname = socket.gethostname()
+    ## getting the IP address using socket.gethostbyname() method
+    ip_address = socket.gethostbyname(hostname)
+    ## printing the hostname and ip_address
+    print(f"Hostname: {hostname}")
+    print(f"IP Address: {ip_address}")
+
+    requestor_id = ip_address
 
     # Get current date and time
     now = datetime.datetime.now()
@@ -63,18 +72,18 @@ def publish():
     temperature = []
 
     while True:
-        # # Generate a random number between 1 and 100 (you can adjust the range as needed)
-        # random_number = random.randint(1, 100)
-        # print(f"Random Number: {random_number}")
+        # Generate a random number between 1 and 100 (you can adjust the range as needed)
+        random_number = random.randint(1, 100)
+        print(f"Random Number: {random_number}")
 
-        # # Add the random number to the list
-        # temperature.append(random_number)
-
-        climate = t.get_climate(zone=1)
-        print(f"Temperature: {climate['temperature']}")
-        
         # Add the random number to the list
-        temperature.append(climate['temperature'])
+        temperature.append(random_number)
+
+        # climate = t.get_climate(zone=1)
+        # print(f"Temperature: {climate['temperature']}")
+        
+        # # Add the random number to the list
+        # temperature.append(climate['temperature'])
         
         # Print the list as a string after 48 seconds
         if len(temperature) == 48:

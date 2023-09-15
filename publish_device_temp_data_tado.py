@@ -22,7 +22,7 @@ args = parser.parse_args()
 requestor_type = args.requestor_type
 print("Requestor Type: ", requestor_type)
 
-# t = Tado('my@username.com', 'mypassword')
+t = Tado('my@username.com', 'mypassword')
 
 def on_error(ws, error):
     print(error)
@@ -72,18 +72,18 @@ def publish():
     temperature = []
 
     while True:
-        # Generate a random number between 1 and 100 (you can adjust the range as needed)
-        random_number = random.randint(1, 100)
-        print(f"Random Number: {random_number}")
+        # # Generate a random number between 1 and 100 (you can adjust the range as needed)
+        # random_number = random.randint(1, 100)
+        # print(f"Random Number: {random_number}")
 
-        # Add the random number to the list
-        temperature.append(random_number)
-
-        # climate = t.get_climate(zone=1)
-        # print(f"Temperature: {climate['temperature']}")
-        
         # # Add the random number to the list
-        # temperature.append(climate['temperature'])
+        # temperature.append(random_number)
+
+        climate = t.get_climate(zone=1)
+        print(f"Temperature: {climate['temperature']}")
+        
+        # Add the random number to the list
+        temperature.append(climate['temperature'])
         
         # Print the list as a string after 48 seconds
         if len(temperature) == 48:
